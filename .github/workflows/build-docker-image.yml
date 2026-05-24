@@ -6,6 +6,7 @@ on:
     paths:
       - 'Dockerfile'
       - 'index.js'
+      - 'clash.js'
       - 'package.json'
   pull_request:
     branches: [ main ]

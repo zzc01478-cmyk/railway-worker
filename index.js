@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const axios = require("axios");
+const { buildClashConfig } = require("./clash");
 const os = require('os');
 const fs = require("fs");
 const path = require("path");
@@ -478,6 +479,12 @@ trojan://${UUID}@${CFIP}:${CFPORT}?security=tls&sni=${argoDomain}&fp=firefox&typ
         const encodedContent = Buffer.from(subTxt).toString('base64');
         res.set('Content-Type', 'text/plain; charset=utf-8');
         res.send(encodedContent);
+      });
+      // Clash Meta 专用 YAML 配置路由，避免 Clash 把 Base64 通用订阅当作 YAML 解析时报错
+      app.get('/clash', (req, res) => {
+        const clashConfig = buildClashConfig(subTxt);
+        res.set('Content-Type', 'text/yaml; charset=utf-8');
+        res.send(clashConfig);
       });
       resolve(subTxt);
       }, 2000);
