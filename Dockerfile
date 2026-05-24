@@ -1,4 +1,4 @@
-FROM node:alpine3.20
+FROM public.ecr.aws/docker/library/node:alpine3.20
 
 WORKDIR /tmp
 
